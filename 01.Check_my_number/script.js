@@ -8,23 +8,11 @@ const checkBtn = document.querySelector('.check');
 const scoreView = document.querySelector('.score');
 const userHighscore = document.querySelector('.highscore');
 const winNumber = Math.trunc(Math.random() * 20) + 1;
+const restartGame = document.querySelector('.again');
 
-const checkTwoNumberEquality = (userNumber, machineNumber) => {
-  if (userNumber > machineNumber) {
-    CurrentScore = CurrentScore - 1;
-    score.textContent = CurrentScore;
-    return (message.textContent = 'Your Number is high');
-  } else if (userNumber < machineNumber) {
-    CurrentScore = CurrentScore - 1;
-    score.textContent = CurrentScore;
-    return (message.textContent = 'Your Number is low');
-  }
-  number.textContent = winNumber;
-  userHighscore.textContent = CurrentScore;
-  return (message.textContent = 'Congratulation you won the game');
-};
+const restart = () => {};
 
-checkBtn.addEventListener('click', () => {
+const handleCheckClick = () => {
   const userChoice = document.querySelector('.guess').value;
 
   if (!userChoice) {
@@ -33,4 +21,36 @@ checkBtn.addEventListener('click', () => {
   }
 
   checkTwoNumberEquality(userChoice, winNumber);
-});
+};
+
+const checkTwoNumberEquality = (userNumber, machineNumber) => {
+  console.log('Click');
+  if (userNumber > machineNumber) {
+    if (CurrentScore >= 1) {
+      CurrentScore--;
+      score.textContent = CurrentScore;
+      return (message.textContent = 'Your Number is high');
+    } else {
+      checkBtn.removeEventListener('click', handleCheckClick, false);
+      return (message.textContent = 'Sorry you lost the game');
+    }
+  } else if (userNumber < machineNumber) {
+    if (CurrentScore >= 1) {
+      CurrentScore--;
+      score.textContent = CurrentScore;
+
+      return (message.textContent = 'Your Number is low');
+    } else {
+      checkBtn.removeEventListener('click', handleCheckClick, false);
+      return (message.textContent = 'Sorry you lost the game');
+    }
+  }
+  number.textContent = winNumber;
+  userHighscore.textContent = CurrentScore;
+  document.querySelector('body').style.backgroundColor = 'green';
+  return (message.textContent = 'Congratulation you won the game');
+};
+
+// Adding event to the check button
+
+checkBtn.addEventListener('click', handleCheckClick);
