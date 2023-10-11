@@ -6,6 +6,14 @@ const closeModalBtn = document.querySelector('.close-modal');
 const overlay = document.querySelector('.overlay');
 let openModal = true;
 
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    openModal = !false;
+    return removeHiddenClass();
+  }
+  return;
+});
+
 const removeHiddenClass = () => {
   if (openModal) {
     modalBox.classList.add('hidden');
