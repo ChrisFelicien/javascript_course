@@ -1,5 +1,6 @@
 'use strict';
 
+
 const openModalBtns = document.querySelectorAll('.show-modal');
 const modalBox = document.querySelector('.modal');
 const closeModalBtn = document.querySelector('.close-modal');
@@ -42,3 +43,4 @@ openModalBtns.forEach(btn =>
     removeHiddenClass();
   })
 );
+
