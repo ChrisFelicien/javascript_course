@@ -3,26 +3,38 @@
 // Selecting element from DOM
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
-let activePlayer = 0; //The player who start the game
-const scores = [0, 0];
-let currentScore = 0;
+//The player who start the game
+let scores, currentScore, activePlayer, gameOver;
+
 const scorOneEl = document.getElementById('score--0');
 const scoreTwoEl = document.getElementById('score--1');
 const btns = document.querySelectorAll('.btn');
 const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
-
 const diceEl = document.querySelector('.dice');
-let gameOver = false;
 
 //Starting condition
 
-diceEl.classList.add('hidden'); // Hide the dice on when the game start
-scorOneEl.textContent = 0;
-scoreTwoEl.textContent = 0;
+const init = () => {
+  diceEl.classList.add('hidden'); // Hide the dice on when the game start
+  scorOneEl.textContent = 0;
+  scoreTwoEl.textContent = 0;
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  gameOver = false;
 
-//Respomding to btns click event
+  //
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  current0El.textContent = 0;
+  current1El.textContent = 0;
 
+  document.querySelector(`.player--0`).classList.add('player--active');
+  document.querySelector(`.player--1`).classList.remove('player--active');
+};
+
+init();
 // Function to Generate a random Number between 1-6
 const randomNumberGenerator = () => Math.trunc(Math.random() * 6) + 1;
 
@@ -41,23 +53,7 @@ const swicthPlayer = () => {
 // function to start new game
 
 const startNewGame = () => {
-  gameOver = false;
-  player0El.classList.remove('player--winner');
-  player1El.classList.remove('player--winner');
-  currentScore = 0;
-  scores[0] = 0;
-  scores[1] = 0;
-
-  scorOneEl.textContent = 0;
-  scoreTwoEl.textContent = 0;
-
-  current0El.textContent = 0;
-  current1El.textContent = 0;
-
-  activePlayer = 0;
-
-  document.querySelector(`.player--0`).classList.add('player--active');
-  document.querySelector(`.player--1`).classList.remove('player--active');
+  init();
 };
 
 // Function to hold the score
