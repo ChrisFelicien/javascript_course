@@ -1,7 +1,10 @@
 'use strict';
 
 // Selecting element from DOM
-let player = 0; //The player who start the game
+const player0El = document.querySelector('.player--0');
+const player1El = document.querySelector('.player--1');
+let activePlayer = 0; //The player who start the game
+const scores = [0, 0];
 let currentScore = 0;
 const scorOneEl = document.getElementById('score--0');
 const scoreTwoEl = document.getElementById('score--1');
@@ -24,8 +27,11 @@ const randomNumberGenerator = () => Math.trunc(Math.random() * 6) + 1;
 
 // Function swicth player
 
-const swicthPlayer = currentPlayer => {
-  player = currentPlayer === 0 ? 1 : 0;
+const swicthPlayer = () => {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player0El.classList.toggle('player--active');
+  player1El.classList.toggle('player--active');
 };
 
 // Function to  display the dice
@@ -43,10 +49,11 @@ const rollingAnddisplayDice = () => {
 
   if (currentNumber !== 1) {
     currentScore += currentNumber;
-    current0El.textContent = currentScore;
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   } else {
-    swicthPlayer(player);
-    console.log(player);
+    swicthPlayer();
+    currentScore = 0;
   }
 };
 
