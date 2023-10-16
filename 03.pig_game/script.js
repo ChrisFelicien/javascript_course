@@ -13,6 +13,7 @@ const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
 
 const diceEl = document.querySelector('.dice');
+let gameOver = false;
 
 //Starting condition
 
@@ -37,6 +38,28 @@ const swicthPlayer = () => {
   player1El.classList.toggle('player--active');
 };
 
+// function to start new game
+
+const startNewGame = () => {
+  gameOver = false;
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  currentScore = 0;
+  scores[0] = 0;
+  scores[1] = 0;
+
+  scorOneEl.textContent = 0;
+  scoreTwoEl.textContent = 0;
+
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  activePlayer = 0;
+
+  document.querySelector(`.player--0`).classList.add('player--active');
+  document.querySelector(`.player--1`).classList.remove('player--active');
+};
+
 // Function to hold the score
 
 const holdScore = () => {
@@ -44,7 +67,8 @@ const holdScore = () => {
   document.getElementById(`score--${activePlayer}`).textContent =
     scores[activePlayer];
 
-  if (scores[activePlayer] >= 100) {
+  if (scores[activePlayer] >= 10) {
+    gameOver = true;
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner');
@@ -53,7 +77,7 @@ const holdScore = () => {
     diceEl.classList.add('hidden');
     return 0;
   }
-  swicthPlayer();
+  return swicthPlayer();
 };
 
 // Function to  display the dice
@@ -64,7 +88,6 @@ const rollingAnddisplayDice = () => {
 
   //   2. Set src Attribute to dice
   diceEl.src = diceImg;
-
   diceEl.classList.remove('hidden');
 
   //   3. Check if the current rool dice isn't one
@@ -82,14 +105,16 @@ const rollingAnddisplayDice = () => {
 
 btns.forEach(btn =>
   btn.addEventListener('click', e => {
-    if (e.currentTarget.classList.contains('btn--roll')) {
-      rollingAnddisplayDice();
-    }
-    if (e.currentTarget.classList.contains('btn--hold')) {
-      holdScore();
+    if (!gameOver) {
+      if (e.currentTarget.classList.contains('btn--roll')) {
+        rollingAnddisplayDice();
+      }
+      if (e.currentTarget.classList.contains('btn--hold')) {
+        holdScore();
+      }
     }
     if (e.currentTarget.classList.contains('btn--new')) {
-      console.log(`Start new game`);
+      startNewGame();
     }
   })
 );
