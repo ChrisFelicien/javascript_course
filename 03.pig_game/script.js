@@ -63,7 +63,7 @@ const holdScore = () => {
   document.getElementById(`score--${activePlayer}`).textContent =
     scores[activePlayer];
 
-  if (scores[activePlayer] >= 10) {
+  if (scores[activePlayer] >= 100) {
     gameOver = true;
     document
       .querySelector(`.player--${activePlayer}`)
