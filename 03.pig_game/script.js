@@ -28,10 +28,32 @@ const randomNumberGenerator = () => Math.trunc(Math.random() * 6) + 1;
 // Function swicth player
 
 const swicthPlayer = () => {
-  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  diceEl.classList.add('hidden');
+  currentScore = 0;
+  document.getElementById(`current--${activePlayer}`).textContent =
+    currentScore;
   activePlayer = activePlayer === 0 ? 1 : 0;
   player0El.classList.toggle('player--active');
   player1El.classList.toggle('player--active');
+};
+
+// Function to hold the score
+
+const holdScore = () => {
+  scores[activePlayer] += currentScore;
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+
+  if (scores[activePlayer] >= 100) {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    player0El.classList.remove('player--active');
+    player1El.classList.remove('player--active');
+    diceEl.classList.add('hidden');
+    return 0;
+  }
+  swicthPlayer();
 };
 
 // Function to  display the dice
@@ -53,14 +75,21 @@ const rollingAnddisplayDice = () => {
       currentScore;
   } else {
     swicthPlayer();
-    currentScore = 0;
   }
 };
+
+// Handle all btn click
 
 btns.forEach(btn =>
   btn.addEventListener('click', e => {
     if (e.currentTarget.classList.contains('btn--roll')) {
       rollingAnddisplayDice();
+    }
+    if (e.currentTarget.classList.contains('btn--hold')) {
+      holdScore();
+    }
+    if (e.currentTarget.classList.contains('btn--new')) {
+      console.log(`Start new game`);
     }
   })
 );
